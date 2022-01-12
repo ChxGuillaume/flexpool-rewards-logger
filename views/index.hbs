@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.2/echarts.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.2/theme/dark.min.js"></script>
+
+  <title>Flexpool Rewards</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+
+      width: 100vw;
+      height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: rgb(16, 12, 42);
+
+      overflow: hidden;
+    }
+
+    #logo {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+
+      width: 250px;
+
+      z-index: 100;
+    }
+
+    #logo img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<a id="logo" href="https://www.flexpool.io/" target="_blank">
+  <img src="/img/flexpool-logo.png" alt="flexpool logo">
+</a>
+<div id="graph" style="width: 100vw; height: 100vh;"></div>
+
+<script>
+  const chartDom = document.getElementById("graph");
+  const myChart = echarts.init(chartDom, "dark");
+  let option;
+
+  let base = +new Date(1968, 9, 3);
+  let oneDay = 24 * 3600 * 1000;
+
+  const data = JSON.parse('{{{ chart }}}');
+
+  let dates = data.dates;
+  let values = data.values;
+
+  option = {
+    tooltip: {
+      trigger: "axis"
+    },
+    toolbox: {
+      feature: {
+        dataZoom: {
+          yAxisIndex: "none"
+        },
+        restore: {},
+        saveAsImage: {}
+      }
+    },
+    dataZoom: [
+      {
+        type: "inside",
+        start: 0,
+        end: 100
+      },
+      {
+        start: 0,
+        end: 100
+      }
+    ],
+    xAxis: {
+      type: "category",
+      boundaryGap: false,
+      data: dates
+    },
+    yAxis: {
+      type: "value",
+      boundaryGap: ["100%"]
+    },
+    series: [
+      {
+        name: "Fake Data",
+        type: "line",
+        symbol: "none",
+        sampling: "lttb",
+        itemStyle: { color: "#0069ff" },
+        data: values
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+</script>
+</body>
+</html>
