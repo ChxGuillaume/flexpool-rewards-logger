@@ -69,7 +69,8 @@
     tooltip: {
       trigger: "axis",
       formatter(datasets) {
-        return datasets.map(v => `${v.marker} ${v.seriesName} <strong>${Math.round(v.data * roundingPrecision) / roundingPrecision}</strong>`).join("<br>");
+        return `<div style="font-weight:bold;font-size:1.1em;margin-bottom:6px;">${datasets[0]?.axisValue}</div>`
+          + datasets.map(v => `${v.marker} ${v.seriesName} <strong>${Math.round(v.data * roundingPrecision) / roundingPrecision}</strong>`).join("<br>");
       }
     },
     grid: {
