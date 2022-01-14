@@ -99,6 +99,9 @@
     },
     yAxis: {
       type: "value",
+      min (value) {
+        return Math.round((value.min - 1 / roundingPrecision) * roundingPrecision) / roundingPrecision;
+      },
       splitLine: {
         show: true,
         lineStyle: {
