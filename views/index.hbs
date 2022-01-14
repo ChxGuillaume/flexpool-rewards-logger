@@ -67,7 +67,10 @@
 
   option = {
     tooltip: {
-      trigger: "axis"
+      trigger: "axis",
+      formatter(datasets) {
+        return datasets.map(v => `${v.marker} ${v.seriesName} ${Math.round(v.data * roundingPrecision) / roundingPrecision}`).join("<br>");
+      }
     },
     grid: {
       top: "100"
@@ -99,7 +102,7 @@
     },
     yAxis: {
       type: "value",
-      min (value) {
+      min(value) {
         return Math.round((value.min - 1 / roundingPrecision) * roundingPrecision) / roundingPrecision;
       },
       splitLine: {
@@ -112,24 +115,24 @@
     },
     legend: {
       top: 20,
-      data: ['Reward 100MH/s 24h', 'Reward 100MH/s 1h']
+      data: ["Reward 100MH/s 24h", "Reward 100MH/s 1h"]
     },
     series: [
       {
-        name: 'Reward 100MH/s 24h',
-        type: 'line',
-        symbol: 'none',
-        sampling: 'lttb',
+        name: "Reward 100MH/s 24h",
+        type: "line",
+        symbol: "none",
+        sampling: "lttb",
         itemStyle: { color: "#0069ff" },
-        data: values.map(v => Math.floor(v * roundingPrecision) / roundingPrecision)
+        data: values
       },
       {
-        name: 'Reward 100MH/s 1h',
-        type: 'line',
-        symbol: 'none',
-        sampling: 'lttb',
+        name: "Reward 100MH/s 1h",
+        type: "line",
+        symbol: "none",
+        sampling: "lttb",
         itemStyle: { color: "#48ff00" },
-        data: values.map(v => Math.floor(v / 24 * roundingPrecision) / roundingPrecision)
+        data: values.map(v => v / 24)
       }
     ]
   };
