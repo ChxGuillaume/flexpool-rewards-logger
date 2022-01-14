@@ -63,9 +63,14 @@
   let dates = data.dates;
   let values = data.values;
 
+  const roundingPrecision = 1000000;
+
   option = {
     tooltip: {
       trigger: "axis"
+    },
+    grid: {
+      top: "100"
     },
     toolbox: {
       feature: {
@@ -94,16 +99,34 @@
     },
     yAxis: {
       type: "value",
-      boundaryGap: ["100%"]
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+          color: "rgba(0, 0, 0, 0.09)"
+        }
+      }
+    },
+    legend: {
+      top: 20,
+      data: ['Reward 100MH/s 24h', 'Reward 100MH/s 1h']
     },
     series: [
       {
-        name: "Reward for 1GH/s (100MH/s)",
-        type: "line",
-        symbol: "none",
-        sampling: "lttb",
+        name: 'Reward 100MH/s 24h',
+        type: 'line',
+        symbol: 'none',
+        sampling: 'lttb',
         itemStyle: { color: "#0069ff" },
-        data: values
+        data: values.map(v => Math.floor(v * roundingPrecision) / roundingPrecision)
+      },
+      {
+        name: 'Reward 100MH/s 1h',
+        type: 'line',
+        symbol: 'none',
+        sampling: 'lttb',
+        itemStyle: { color: "#48ff00" },
+        data: values.map(v => Math.floor(v / 24 * roundingPrecision) / roundingPrecision)
       }
     ]
   };
